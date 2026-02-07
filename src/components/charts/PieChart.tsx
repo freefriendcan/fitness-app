@@ -3,8 +3,8 @@
  * Simple SVG pie chart for displaying distribution data
  */
 
-import React from 'react';
-import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, StyleSheet, Dimensions, ScrollView, Text } from 'react-native';
 import Svg, { Circle, Path, G, Text as SvgText, Line } from 'react-native-svg';
 import { Colors, Spacing, Typography, Layout } from '@/constants';
 
@@ -23,7 +23,7 @@ interface PieChartProps {
   centerValue?: string;
 }
 
-const COLORS = [
+const getColors = () => [
   Colors.primary[500],
   Colors.secondary[500],
   Colors.success[500],
@@ -44,6 +44,8 @@ export const PieChart: React.FC<PieChartProps> = ({
   centerLabel,
   centerValue,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   if (data.length === 0) {
     return (
       <View style={[styles.container, { width: size, height: size }]}>
@@ -57,9 +59,10 @@ export const PieChart: React.FC<PieChartProps> = ({
   const totalValue = data.reduce((sum, d) => sum + d.value, 0);
 
   // Assign colors to data
+  const colors = getColors();
   const coloredData = data.map((d, i) => ({
     ...d,
-    color: d.color || COLORS[i % COLORS.length],
+    color: d.color || colors[i % colors.length],
   }));
 
   // Create pie slices
@@ -173,38 +176,39 @@ export const PieChart: React.FC<PieChartProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    paddingVertical: Spacing.md,
-  },
-  noDataText: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    textAlign: 'center',
-    marginTop: Spacing.lg,
-  },
-  legendContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: Spacing.md,
-    gap: Spacing.sm,
-  },
-  legendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: Spacing.md,
-    marginBottom: Spacing.xs,
-  },
-  legendColor: {
-    width: 12,
-    height: 12,
-    borderRadius: 2,
-    marginRight: Spacing.xs,
-  },
-  legendLabel: {
-    fontSize: Typography.fontSize.xs,
-    color: Colors.text.secondary,
-  },
-});
+const getStyles = () =>
+  StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      paddingVertical: Spacing.md,
+    },
+    noDataText: {
+      fontSize: Typography.fontSize.sm,
+      color: Colors.text.secondary,
+      textAlign: 'center',
+      marginTop: Spacing.lg,
+    },
+    legendContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      marginTop: Spacing.md,
+      gap: Spacing.sm,
+    },
+    legendItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginRight: Spacing.md,
+      marginBottom: Spacing.xs,
+    },
+    legendColor: {
+      width: 12,
+      height: 12,
+      borderRadius: 2,
+      marginRight: Spacing.xs,
+    },
+    legendLabel: {
+      fontSize: Typography.fontSize.xs,
+      color: Colors.text.secondary,
+    },
+  });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Svg, Line, Polyline, Circle } from 'react-native-svg';
 import { Colors, Spacing, Typography } from '@/constants';
@@ -19,6 +19,7 @@ export const MeasurementChart: React.FC<Props> = ({
   unitSystem,
   days = 30,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
   const screenWidth = Dimensions.get('window').width - Spacing.lg * 2;
 
   // Filter measurements by date range
@@ -193,7 +194,7 @@ export const MeasurementChart: React.FC<Props> = ({
                   left:
                     padding.left +
                     (index / (filteredData.length - 1)) *
-                      (chartWidth - padding.left - padding.right) -
+                    (chartWidth - padding.left - padding.right) -
                     20,
                 },
               ]}
@@ -210,47 +211,48 @@ export const MeasurementChart: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: Spacing.md,
-  },
-  emptyContainer: {
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.background.secondary,
-    borderRadius: 8,
-    padding: Spacing.lg,
-  },
-  emptyText: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    textAlign: 'center',
-  },
-  yAxisLabel: {
-    position: 'absolute',
-    fontSize: Typography.fontSize.xs,
-    color: Colors.text.secondary,
-    width: 40,
-    textAlign: 'right',
-  },
-  xAxis: {
-    height: 20,
-    marginTop: Spacing.xs,
-  },
-  xAxisLabel: {
-    position: 'absolute',
-    fontSize: Typography.fontSize.xs,
-    color: Colors.text.secondary,
-    width: 40,
-    textAlign: 'center',
-  },
-  unitLabel: {
-    position: 'absolute',
-    top: 5,
-    right: 5,
-    fontSize: Typography.fontSize.xs,
-    color: Colors.primary[500],
-    fontWeight: Typography.fontWeight.semibold,
-  },
-});
+const getStyles = () =>
+  StyleSheet.create({
+    container: {
+      marginVertical: Spacing.md,
+    },
+    emptyContainer: {
+      height: 200,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: Colors.background.secondary,
+      borderRadius: 8,
+      padding: Spacing.lg,
+    },
+    emptyText: {
+      fontSize: Typography.fontSize.sm,
+      color: Colors.text.secondary,
+      textAlign: 'center',
+    },
+    yAxisLabel: {
+      position: 'absolute',
+      fontSize: Typography.fontSize.xs,
+      color: Colors.text.secondary,
+      width: 40,
+      textAlign: 'right',
+    },
+    xAxis: {
+      height: 20,
+      marginTop: Spacing.xs,
+    },
+    xAxisLabel: {
+      position: 'absolute',
+      fontSize: Typography.fontSize.xs,
+      color: Colors.text.secondary,
+      width: 40,
+      textAlign: 'center',
+    },
+    unitLabel: {
+      position: 'absolute',
+      top: 5,
+      right: 5,
+      fontSize: Typography.fontSize.xs,
+      color: Colors.primary[500],
+      fontWeight: Typography.fontWeight.semibold,
+    },
+  });

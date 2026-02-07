@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,8 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Routes } from '@/constants';
 import { Button, Card, Input } from '@/components';
-import { Colors, Layout, Spacing, Typography } from '@/constants';
+import { Layout, Spacing, Typography } from '@/constants';
+import { useTheme } from '@/hooks/useTheme';
 import { useUserStore } from '@/store';
 import { validateName, validateWeight, validateHeight } from '@/utils';
 import type { ProfileStackParamList } from '@/navigation/types';
@@ -39,6 +40,9 @@ const FITNESS_GOALS: FitnessGoalOption[] = [
 ];
 
 export const EditProfileScreen: React.FC<Props> = ({ navigation }) => {
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
+
   const { user, updateProfile, getUnits } = useUserStore();
   const unitSystem = getUnits();
 
@@ -266,10 +270,10 @@ export const EditProfileScreen: React.FC<Props> = ({ navigation }) => {
 
 import { TouchableOpacity } from 'react-native';
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background.secondary,
+    backgroundColor: colors.background.secondary,
   },
   contentContainer: {
     padding: Spacing.lg,
@@ -280,13 +284,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: Typography.fontSize.lg,
     fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.primary,
+    color: colors.text.primary,
     marginBottom: Spacing.md,
   },
   label: {
     fontSize: Typography.fontSize.sm,
     fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.primary,
+    color: colors.text.primary,
     marginBottom: Spacing.xs,
     marginTop: Spacing.sm,
   },
@@ -295,7 +299,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   unitInfo: {
-    backgroundColor: Colors.primary[50],
+    backgroundColor: colors.primary[50],
     padding: Spacing.md,
     borderRadius: Layout.borderRadius.md,
     marginBottom: Spacing.md,
@@ -303,11 +307,11 @@ const styles = StyleSheet.create({
   unitText: {
     fontSize: Typography.fontSize.sm,
     fontWeight: Typography.fontWeight.medium,
-    color: Colors.primary[700],
+    color: colors.primary[700],
   },
   unitSubtext: {
     fontSize: Typography.fontSize.xs,
-    color: Colors.primary[600],
+    color: colors.primary[600],
     marginTop: Spacing.xs,
   },
   dropdownButton: {
@@ -315,9 +319,9 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     borderWidth: 1,
-    borderColor: Colors.border.light,
+    borderColor: colors.border.light,
     borderRadius: Layout.borderRadius.md,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     maxHeight: 200,
   },
   optionItem: {
@@ -326,22 +330,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: Spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border.light,
+    borderBottomColor: colors.border.light,
   },
   optionItemSelected: {
-    backgroundColor: Colors.primary[50],
+    backgroundColor: colors.primary[50],
   },
   optionText: {
     fontSize: Typography.fontSize.base,
-    color: Colors.text.primary,
+    color: colors.text.primary,
   },
   optionTextSelected: {
-    color: Colors.primary[700],
+    color: colors.primary[700],
     fontWeight: Typography.fontWeight.semibold,
   },
   checkmark: {
     fontSize: Typography.fontSize.lg,
-    color: Colors.primary[500],
+    color: colors.primary[500],
     fontWeight: Typography.fontWeight.bold,
   },
   buttonContainer: {

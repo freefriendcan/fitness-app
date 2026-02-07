@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { Input, Button, Colors, Spacing, Typography } from '@/components';
+import { Input, Button } from '@/components';
+import { Colors, Spacing, Typography } from '@/constants';
 import { useBodyTrackingStore } from '@/store';
 import type { ProfileStackParamList } from '@/navigation/types';
 
@@ -45,6 +46,8 @@ const PHOTO_TYPES: { type: PhotoType; label: string; icon: keyof typeof Ionicons
 export const AddProgressPhotoScreen: React.FC<Props> = ({
   navigation,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { addProgressPhoto } = useBodyTrackingStore();
 
   const [photoUri, setPhotoUri] = useState<string>('');
@@ -270,7 +273,7 @@ export const AddProgressPhotoScreen: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

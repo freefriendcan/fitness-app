@@ -31,6 +31,42 @@ export const Calendar: React.FC<CalendarProps> = ({
     initialMonth || startOfMonth(new Date())
   );
 
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          backgroundColor: Colors.white,
+          borderRadius: 12,
+          padding: Spacing.lg,
+          ...Layout.shadow.sm,
+        },
+        weekdayHeader: {
+          flexDirection: 'row',
+          marginBottom: Spacing.sm,
+        },
+        weekdayCell: {
+          flex: 1,
+          alignItems: 'center',
+          paddingVertical: Spacing.sm,
+        },
+        weekdayText: {
+          fontSize: Typography.fontSize.xs,
+          fontWeight: Typography.fontWeight.semibold,
+          color: Colors.text.secondary,
+          textTransform: 'uppercase',
+        },
+        week: {
+          flexDirection: 'row',
+          marginBottom: Spacing.xs,
+        },
+        calendarScroll: {
+          marginTop: Spacing.xs,
+        },
+      }),
+    []
+  );
+
   const handlePreviousMonth = useCallback(() => {
     setCurrentMonth((prev) => addMonths(prev, -1));
   }, []);
@@ -128,34 +164,3 @@ export const Calendar: React.FC<CalendarProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-    padding: Spacing.lg,
-    ...Layout.shadow.sm,
-  },
-  weekdayHeader: {
-    flexDirection: 'row',
-    marginBottom: Spacing.sm,
-  },
-  weekdayCell: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: Spacing.sm,
-  },
-  weekdayText: {
-    fontSize: Typography.fontSize.xs,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.secondary,
-    textTransform: 'uppercase',
-  },
-  week: {
-    flexDirection: 'row',
-    marginBottom: Spacing.xs,
-  },
-  calendarScroll: {
-    marginTop: Spacing.xs,
-  },
-});

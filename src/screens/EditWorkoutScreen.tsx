@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -34,6 +34,8 @@ interface WorkoutExercise {
 }
 
 export const EditWorkoutScreen: React.FC = () => {
+  const styles = useMemo(() => getStyles(), []);
+
   const navigation = useNavigation<EditWorkoutScreenNavigationProp>();
   const route = useRoute<RouteParams>();
   const { workoutId } = route.params;
@@ -387,7 +389,7 @@ export const EditWorkoutScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

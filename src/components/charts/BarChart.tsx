@@ -3,8 +3,8 @@
  * Simple SVG bar chart for displaying frequency/distribution data
  */
 
-import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import Svg, { Rect, Line, G, Text as SvgText } from 'react-native-svg';
 import { Colors, Spacing, Typography } from '@/constants';
 
@@ -43,6 +43,8 @@ export const BarChart: React.FC<BarChartProps> = ({
   formatXLabel = (label) => label,
   onPress,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   if (data.length === 0) {
     return (
       <View style={[styles.container, { width, height }]}>
@@ -148,16 +150,17 @@ export const BarChart: React.FC<BarChartProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white,
-    borderRadius: 8,
-    paddingVertical: Spacing.sm,
-  },
-  noDataText: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    textAlign: 'center',
-    marginTop: Spacing.lg,
-  },
-});
+const getStyles = () =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: Colors.white,
+      borderRadius: 8,
+      paddingVertical: Spacing.sm,
+    },
+    noDataText: {
+      fontSize: Typography.fontSize.sm,
+      color: Colors.text.secondary,
+      textAlign: 'center',
+      marginTop: Spacing.lg,
+    },
+  });

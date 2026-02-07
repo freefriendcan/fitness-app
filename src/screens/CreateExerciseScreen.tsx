@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -42,6 +42,8 @@ const EQUIPMENT_OPTIONS: Equipment[] = [
 ];
 
 export const CreateExerciseScreen: React.FC = () => {
+  const styles = useMemo(() => getStyles(), []);
+
   const navigation = useNavigation<NavigationProp>();
   const { addExercise, createExercise } = useExercise();
 
@@ -256,7 +258,7 @@ export const CreateExerciseScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

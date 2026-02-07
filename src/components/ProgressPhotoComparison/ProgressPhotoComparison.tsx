@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { ProgressPhoto } from '@/types';
-import { Card, Colors, Spacing, Typography } from '@/components';
+import { Card } from '@/components/Card/Card';
+import { Colors, Spacing, Typography, Layout } from '@/constants';
 
 interface Props {
   beforePhoto: ProgressPhoto;
@@ -26,6 +27,97 @@ export const ProgressPhotoComparison: React.FC<Props> = ({
 }) => {
   const imageWidth = (screenWidth - Spacing.lg * 2 - Spacing.md) / 2;
   const imageHeight = imageWidth * 1.33; // 3:4 aspect ratio
+
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          flex: 1,
+          backgroundColor: Colors.background.secondary,
+        },
+        header: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: Spacing.lg,
+          backgroundColor: Colors.white,
+          borderBottomWidth: 1,
+          borderBottomColor: Colors.border.light,
+        },
+        headerContent: {
+          flex: 1,
+        },
+        title: {
+          fontSize: Typography.fontSize.xl,
+          fontWeight: Typography.fontWeight.bold,
+          color: Colors.text.primary,
+        },
+        subtitle: {
+          fontSize: Typography.fontSize.sm,
+          color: Colors.text.secondary,
+          marginTop: Spacing.xs,
+        },
+        closeButton: {
+          padding: Spacing.sm,
+        },
+        comparisonContainer: {
+          flexDirection: 'row',
+          paddingHorizontal: Spacing.lg,
+          paddingVertical: Spacing.md,
+          gap: Spacing.md,
+        },
+        photoColumn: {
+          flex: 1,
+        },
+        photoCard: {
+          padding: Spacing.sm,
+        },
+        photoHeader: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: Spacing.sm,
+        },
+        photoLabel: {
+          fontSize: Typography.fontSize.base,
+          fontWeight: Typography.fontWeight.semibold,
+          color: Colors.text.primary,
+        },
+        photo: {
+          borderRadius: Layout.borderRadius.md,
+        },
+        photoFooter: {
+          marginTop: Spacing.sm,
+          gap: 2,
+        },
+        photoDate: {
+          fontSize: Typography.fontSize.sm,
+          fontWeight: Typography.fontWeight.medium,
+          color: Colors.text.primary,
+        },
+        photoNotes: {
+          fontSize: Typography.fontSize.xs,
+          color: Colors.text.secondary,
+        },
+        tipsCard: {
+          margin: Spacing.lg,
+          padding: Spacing.md,
+        },
+        tipsTitle: {
+          fontSize: Typography.fontSize.base,
+          fontWeight: Typography.fontWeight.semibold,
+          color: Colors.text.primary,
+          marginBottom: Spacing.sm,
+        },
+        tipsText: {
+          fontSize: Typography.fontSize.sm,
+          color: Colors.text.secondary,
+          lineHeight: 22,
+        },
+      }),
+    []
+  );
 
   const formatDate = (date: Date) => {
     const d = new Date(date);
@@ -130,89 +222,3 @@ export const ProgressPhotoComparison: React.FC<Props> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.background.secondary,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: Spacing.lg,
-    backgroundColor: Colors.white,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border.light,
-  },
-  headerContent: {
-    flex: 1,
-  },
-  title: {
-    fontSize: Typography.fontSize.xl,
-    fontWeight: Typography.fontWeight.bold,
-    color: Colors.text.primary,
-  },
-  subtitle: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    marginTop: Spacing.xs,
-  },
-  closeButton: {
-    padding: Spacing.sm,
-  },
-  comparisonContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.md,
-    gap: Spacing.md,
-  },
-  photoColumn: {
-    flex: 1,
-  },
-  photoCard: {
-    padding: Spacing.sm,
-  },
-  photoHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: Spacing.sm,
-  },
-  photoLabel: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.primary,
-  },
-  photo: {
-    borderRadius: Layout.borderRadius.md,
-  },
-  photoFooter: {
-    marginTop: Spacing.sm,
-    gap: 2,
-  },
-  photoDate: {
-    fontSize: Typography.fontSize.sm,
-    fontWeight: Typography.fontWeight.medium,
-    color: Colors.text.primary,
-  },
-  photoNotes: {
-    fontSize: Typography.fontSize.xs,
-    color: Colors.text.secondary,
-  },
-  tipsCard: {
-    margin: Spacing.lg,
-    padding: Spacing.md,
-  },
-  tipsTitle: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.primary,
-    marginBottom: Spacing.sm,
-  },
-  tipsText: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    lineHeight: 22,
-  },
-});

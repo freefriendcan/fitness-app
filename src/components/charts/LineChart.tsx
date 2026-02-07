@@ -3,8 +3,8 @@
  * Simple SVG line chart for displaying trends over time
  */
 
-import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import Svg, { Polyline, Line, Circle, G, Text as SvgText } from 'react-native-svg';
 import { Colors, Spacing, Typography } from '@/constants';
 
@@ -47,6 +47,8 @@ export const LineChart: React.FC<LineChartProps> = ({
   formatXLabel = (label) => label,
   onPointPress,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   if (data.length === 0) {
     return (
       <View style={[styles.container, { width, height }]}>
@@ -148,16 +150,17 @@ export const LineChart: React.FC<LineChartProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white,
-    borderRadius: 8,
-    paddingVertical: Spacing.sm,
-  },
-  noDataText: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    textAlign: 'center',
-    marginTop: Spacing.lg,
-  },
-});
+const getStyles = () =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: Colors.white,
+      borderRadius: 8,
+      paddingVertical: Spacing.sm,
+    },
+    noDataText: {
+      fontSize: Typography.fontSize.sm,
+      color: Colors.text.secondary,
+      textAlign: 'center',
+      marginTop: Spacing.lg,
+    },
+  });

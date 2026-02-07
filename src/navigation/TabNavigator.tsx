@@ -35,6 +35,21 @@ const ProfileIcon = ({ focused }: { focused: boolean }) => (
   </View>
 );
 
+// export const TabNavigator: React.FC = () => {
+//   const { Text, View } = require('react-native');
+//   const DummyScreen = () => (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Dummy Screen</Text>
+//     </View>
+//   );
+//
+//   return (
+//     <Tab.Navigator>
+//       <Tab.Screen name="Dummy" component={DummyScreen} />
+//     </Tab.Navigator>
+//   );
+// };
+
 export const TabNavigator: React.FC = () => {
   return (
     <Tab.Navigator

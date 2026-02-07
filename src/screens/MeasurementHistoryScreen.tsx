@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,8 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { Card, Button, Colors, Spacing, Typography } from '@/components';
+import { Card, Button } from '@/components';
+import { Colors, Spacing, Typography } from '@/constants';
 import { Routes } from '@/constants';
 import { useBodyTrackingStore, useUserStore } from '@/store';
 import { MeasurementChart } from '@/components/MeasurementChart/MeasurementChart';
@@ -36,6 +37,8 @@ type ChartField = 'weight' | 'bodyFat' | 'waist' | 'chest' | 'hips';
 export const MeasurementHistoryScreen: React.FC<Props> = ({
   navigation,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { measurements } = useBodyTrackingStore();
   const { getUnits } = useUserStore();
   const unitSystem = getUnits();
@@ -267,7 +270,7 @@ export const MeasurementHistoryScreen: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

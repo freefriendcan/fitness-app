@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -29,6 +29,8 @@ interface Props {
 }
 
 export const WorkoutListScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { workouts, templates, hasActiveSession, deleteWorkout, startWorkoutSession } = useWorkout();
   const [filter, setFilter] = useState<FilterType>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -304,7 +306,7 @@ export const WorkoutListScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

@@ -33,6 +33,8 @@ const TIME_RANGES: { label: string; value: TimeRange }[] = [
 ];
 
 export const ExerciseProgressScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { workouts } = useWorkout();
   const [selectedRange, setSelectedRange] = useState<TimeRange>('all');
   const [selectedExercise, setSelectedExercise] = useState<string | null>(null);
@@ -357,7 +359,7 @@ export const ExerciseProgressScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

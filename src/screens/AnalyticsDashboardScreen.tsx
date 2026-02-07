@@ -48,6 +48,8 @@ const MUSCLE_GROUP_COLORS: Record<string, string> = {
 };
 
 export const AnalyticsDashboardScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { workouts } = useWorkout();
   const [selectedRange, setSelectedRange] = useState<TimeRange>('month');
 
@@ -259,7 +261,7 @@ export const AnalyticsDashboardScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

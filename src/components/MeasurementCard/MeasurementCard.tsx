@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { BodyMeasurement } from '@/types';
-import { Card, Colors, Spacing, Typography } from '@/constants';
+import { Card } from '@/components/Card/Card';
+import { Colors, Spacing, Typography } from '@/constants';
 
 interface Props {
   measurement: BodyMeasurement;
@@ -19,6 +20,8 @@ export const MeasurementCard: React.FC<Props> = ({
   showTrend = false,
   previousMeasurement,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const formatDate = (date: Date) => {
     const d = new Date(date);
     return d.toLocaleDateString('en-US', {
@@ -68,8 +71,8 @@ export const MeasurementCard: React.FC<Props> = ({
         ? Colors.danger[500]
         : Colors.success[500]
       : isUp
-      ? Colors.success[500]
-      : Colors.danger[500];
+        ? Colors.success[500]
+        : Colors.danger[500];
 
     return (
       <Ionicons
@@ -196,64 +199,65 @@ export const MeasurementCard: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: Spacing.md,
-  },
-  card: {
-    padding: Spacing.md,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: Spacing.md,
-    paddingBottom: Spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border.light,
-  },
-  date: {
-    fontSize: Typography.fontSize.sm,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.primary,
-  },
-  trend: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  measurementsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: -Spacing.xs,
-  },
-  measurementItem: {
-    width: '25%',
-    paddingHorizontal: Spacing.xs,
-    marginBottom: Spacing.sm,
-    alignItems: 'center',
-  },
-  measurementValue: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.primary[500],
-    marginBottom: Spacing.xs,
-    textAlign: 'center',
-  },
-  measurementLabel: {
-    fontSize: Typography.fontSize.xs,
-    color: Colors.text.secondary,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-  },
-  notesContainer: {
-    marginTop: Spacing.sm,
-    paddingTop: Spacing.sm,
-    borderTopWidth: 1,
-    borderTopColor: Colors.border.light,
-  },
-  notesText: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    fontStyle: 'italic',
-  },
-});
+const getStyles = () =>
+  StyleSheet.create({
+    container: {
+      marginBottom: Spacing.md,
+    },
+    card: {
+      padding: Spacing.md,
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: Spacing.md,
+      paddingBottom: Spacing.sm,
+      borderBottomWidth: 1,
+      borderBottomColor: Colors.border.light,
+    },
+    date: {
+      fontSize: Typography.fontSize.sm,
+      fontWeight: Typography.fontWeight.semibold,
+      color: Colors.text.primary,
+    },
+    trend: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    measurementsGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginHorizontal: -Spacing.xs,
+    },
+    measurementItem: {
+      width: '25%',
+      paddingHorizontal: Spacing.xs,
+      marginBottom: Spacing.sm,
+      alignItems: 'center',
+    },
+    measurementValue: {
+      fontSize: Typography.fontSize.base,
+      fontWeight: Typography.fontWeight.semibold,
+      color: Colors.primary[500],
+      marginBottom: Spacing.xs,
+      textAlign: 'center',
+    },
+    measurementLabel: {
+      fontSize: Typography.fontSize.xs,
+      color: Colors.text.secondary,
+      textAlign: 'center',
+      textTransform: 'uppercase',
+    },
+    notesContainer: {
+      marginTop: Spacing.sm,
+      paddingTop: Spacing.sm,
+      borderTopWidth: 1,
+      borderTopColor: Colors.border.light,
+    },
+    notesText: {
+      fontSize: Typography.fontSize.sm,
+      color: Colors.text.secondary,
+      fontStyle: 'italic',
+    },
+  });

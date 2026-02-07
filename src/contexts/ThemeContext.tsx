@@ -30,6 +30,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   initialTheme = 'system',
 }) => {
   const systemColorScheme = useColorScheme();
+  // const systemColorScheme = 'light'; // Temporary debug fix
   const [themeMode, setThemeMode] = useState<ThemeMode>(initialTheme);
   const [isLoaded, setIsLoaded] = useState(false);
 

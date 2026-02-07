@@ -45,6 +45,8 @@ const MUSCLE_GROUP_COLORS: Record<string, string> = {
 };
 
 export const StatisticsScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { workouts } = useWorkout();
   const [selectedRange, setSelectedRange] = useState<TimeRange>('all');
 
@@ -345,7 +347,7 @@ const capitalizeFirstLetter = (str: string): string => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

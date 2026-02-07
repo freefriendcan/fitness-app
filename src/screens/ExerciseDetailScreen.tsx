@@ -60,6 +60,8 @@ const DEFAULT_EXERCISE_IDS = [
 ];
 
 export const ExerciseDetailScreen: React.FC = () => {
+  const styles = useMemo(() => getStyles(), []);
+
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProps>();
   const { getExerciseById, getExercisesByMuscleGroup } = useExercise();
@@ -249,7 +251,7 @@ export const ExerciseDetailScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

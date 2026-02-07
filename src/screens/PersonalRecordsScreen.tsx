@@ -67,6 +67,8 @@ const MUSCLE_GROUP_LABELS: Record<string, string> = {
 };
 
 export const PersonalRecordsScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { workouts } = useWorkout();
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState<MuscleGroup | 'all'>('all');
   const [celebrationAnim] = useState(new Animated.Value(0));
@@ -251,7 +253,7 @@ export const PersonalRecordsScreen: React.FC<Props> = ({ navigation }) => {
 
 const { width } = Dimensions.get('window');
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

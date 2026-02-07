@@ -11,6 +11,8 @@ import type { Set } from '@/types';
 type Props = NativeStackScreenProps<HomeStackParamList, 'WorkoutDetail'>;
 
 export const WorkoutDetailScreen: React.FC<Props> = ({ route, navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { workoutId } = route.params;
   const { getWorkoutById, deleteWorkout } = useWorkout();
   const workout = getWorkoutById(workoutId);
@@ -209,7 +211,7 @@ export const WorkoutDetailScreen: React.FC<Props> = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

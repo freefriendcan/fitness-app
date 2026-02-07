@@ -15,7 +15,7 @@ interface IconButtonProps {
 export const IconButton: React.FC<IconButtonProps> = ({
   icon,
   onPress,
-  size = Layout.icon.md,
+  size = 24, // Same as Layout.icon.md - hardcoded to avoid circular dependency
   variant = 'ghost',
   disabled = false,
   style,

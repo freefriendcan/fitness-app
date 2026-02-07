@@ -1,3 +1,10 @@
+import { Buffer } from 'buffer';
+import { Alert } from 'react-native';
+
+global.Buffer = global.Buffer || Buffer;
+// @ts-ignore
+global.Alert = global.Alert || Alert;
+
 import { registerRootComponent } from 'expo';
 
 import App from './App';

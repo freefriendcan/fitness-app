@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,8 +12,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { useWorkout, useTimer, useStopwatch } from '@/hooks';
 import { Card, Button, Input } from '@/components';
-import { Colors, Spacing, Typography, Layout } from '@/constants';
-import { Routes } from '@/constants';
+import { Colors, Spacing, Typography, Layout, Routes } from '@/constants';
 import { generateId } from '@/utils';
 import type { WorkoutsStackParamList, Exercise } from '@/types';
 import type { Set as WorkoutSet } from '@/types';
@@ -79,13 +78,15 @@ const SetRow = React.memo<SetRowProps>(({ exerciseId, setIndex, setData, onUpdat
   </View>
 ), (prevProps, nextProps) => {
   return prevProps.setData.weight === nextProps.setData.weight &&
-         prevProps.setData.reps === nextProps.setData.reps &&
-         prevProps.setData.completed === nextProps.setData.completed;
+    prevProps.setData.reps === nextProps.setData.reps &&
+    prevProps.setData.completed === nextProps.setData.completed;
 });
 
 SetRow.displayName = 'SetRow';
 
 export const ActiveWorkoutScreen: React.FC = () => {
+  const styles = useMemo(() => getStyles(), []);
+
   const navigation = useNavigation<ActiveWorkoutScreenNavigationProp>();
   const route = useRoute<RouteParams>();
   const { workoutId } = route.params;
@@ -292,42 +293,6 @@ export const ActiveWorkoutScreen: React.FC = () => {
       onRemoveSet={removeSet}
     />
   );
-    <View key={setIndex} style={styles.setRow}>
-      <Text style={styles.setNumber}>{setIndex + 1}</Text>
-      <Input
-        placeholder="0"
-        value={setData.weight}
-        onChangeText={(value) => updateSetData(exerciseId, setIndex, 'weight', value)}
-        keyboardType="numeric"
-        style={styles.setInput}
-      />
-      <Text style={styles.setLabel}>kg</Text>
-      <Input
-        placeholder="0"
-        value={setData.reps}
-        onChangeText={(value) => updateSetData(exerciseId, setIndex, 'reps', value)}
-        keyboardType="numeric"
-        style={styles.setInput}
-      />
-      <Text style={styles.setLabel}>reps</Text>
-      <TouchableOpacity
-        style={[styles.checkbox, setData.completed && styles.checkboxChecked]}
-        onPress={() => toggleSetCompleted(exerciseId, setIndex)}
-        activeOpacity={0.7}
-      >
-        {setData.completed && (
-          <Ionicons name="checkmark" size={18} color={Colors.white} />
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.removeSetButton}
-        onPress={() => removeSet(exerciseId, setIndex)}
-        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-      >
-        <Ionicons name="close-circle" size={24} color={Colors.danger[500]} />
-      </TouchableOpacity>
-    </View>
-  );
 
   const renderExercise = (exercise: Exercise, index: number) => {
     const isCurrent = index === currentExerciseIndex;
@@ -486,7 +451,7 @@ export const ActiveWorkoutScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

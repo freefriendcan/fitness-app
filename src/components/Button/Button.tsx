@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -39,6 +39,29 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
 }) => {
   const { colors } = useTheme();
+
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        button: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: Layout.borderRadius.md,
+          borderWidth: 1,
+          gap: Spacing.sm,
+        },
+        fullWidth: {
+          width: '100%',
+        },
+        text: {
+          fontWeight: Typography.fontWeight.semibold,
+          textAlign: 'center',
+        },
+      }),
+    []
+  );
 
   const getBackgroundColor = (): string => {
     if (disabled) return colors.neutral[300];
@@ -112,21 +135,3 @@ export const Button: React.FC<ButtonProps> = ({
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: Layout.borderRadius.md,
-    borderWidth: 1,
-    gap: Spacing.sm,
-  },
-  fullWidth: {
-    width: '100%',
-  },
-  text: {
-    fontWeight: Typography.fontWeight.semibold,
-    textAlign: 'center',
-  },
-});

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Card, CardHeader, CardBody, Button } from '@/components';
@@ -10,6 +10,8 @@ import type { HomeStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<HomeStackParamList, 'StartWorkout'>;
 
 export const StartWorkoutScreen: React.FC<Props> = ({ route, navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { templateId } = route.params || {};
   const { templates, createWorkoutFromTemplate, createQuickWorkout, startWorkoutSession } = useWorkout();
 
@@ -214,7 +216,7 @@ export const StartWorkoutScreen: React.FC<Props> = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

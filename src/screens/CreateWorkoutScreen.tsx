@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -32,6 +32,8 @@ interface WorkoutExercise {
 }
 
 export const CreateWorkoutScreen: React.FC = () => {
+  const styles = useMemo(() => getStyles(), []);
+
   const navigation = useNavigation<CreateWorkoutScreenNavigationProp>();
   const { createQuickWorkout, addTemplate } = useWorkout();
   const { exercises: libraryExercises } = useExercise();
@@ -343,7 +345,7 @@ export const CreateWorkoutScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

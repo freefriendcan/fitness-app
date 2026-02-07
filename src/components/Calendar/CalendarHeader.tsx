@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing, Typography, Layout } from '@/constants';
@@ -20,6 +20,47 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   const monthName = getMonthName(
     currentMonth.getFullYear(),
     currentMonth.getMonth()
+  );
+
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          marginBottom: Spacing.md,
+        },
+        navContainer: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          paddingHorizontal: Spacing.sm,
+        },
+        titleContainer: {
+          flex: 1,
+          alignItems: 'center',
+        },
+        title: {
+          fontSize: Typography.fontSize.xl,
+          fontWeight: Typography.fontWeight.semibold,
+          color: Colors.text.primary,
+        },
+        navButton: {
+          padding: Spacing.sm,
+          borderRadius: Layout.borderRadius.md,
+          backgroundColor: Colors.neutral[100],
+        },
+        todayButton: {
+          marginTop: Spacing.sm,
+          alignItems: 'center',
+          paddingVertical: Spacing.xs,
+        },
+        todayButtonText: {
+          fontSize: Typography.fontSize.sm,
+          fontWeight: Typography.fontWeight.medium,
+          color: Colors.primary[500],
+        },
+      }),
+    []
   );
 
   return (
@@ -60,39 +101,3 @@ export const CalendarHeader: React.FC<CalendarHeaderProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: Spacing.md,
-  },
-  navContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: Spacing.sm,
-  },
-  titleContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: Typography.fontSize.xl,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.primary,
-  },
-  navButton: {
-    padding: Spacing.sm,
-    borderRadius: Layout.borderRadius.md,
-    backgroundColor: Colors.neutral[100],
-  },
-  todayButton: {
-    marginTop: Spacing.sm,
-    alignItems: 'center',
-    paddingVertical: Spacing.xs,
-  },
-  todayButtonText: {
-    fontSize: Typography.fontSize.sm,
-    fontWeight: Typography.fontWeight.medium,
-    color: Colors.primary[500],
-  },
-});

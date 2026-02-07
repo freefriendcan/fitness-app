@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
-import { Input, Button, Colors, Spacing, Typography } from '@/components';
+import { Input, Button } from '@/components';
+import { Colors, Spacing, Typography } from '@/constants';
 import { useBodyTrackingStore, useUserStore } from '@/store';
 import type { ProfileStackParamList } from '@/navigation/types';
 
@@ -32,6 +33,8 @@ interface Props {
 export const LogMeasurementScreen: React.FC<Props> = ({
   navigation,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { getUnits } = useUserStore();
   const { addMeasurement } = useBodyTrackingStore();
   const unitSystem = getUnits();
@@ -305,7 +308,7 @@ export const LogMeasurementScreen: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

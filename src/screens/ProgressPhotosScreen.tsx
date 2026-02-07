@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,8 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Card, Colors, Spacing, Typography } from '@/components';
+import { Button, Card } from '@/components';
+import { Colors, Spacing, Typography } from '@/constants';
 import { Routes } from '@/constants';
 import { useBodyTrackingStore } from '@/store';
 import { ProgressPhotoGallery } from '@/components/ProgressPhotoGallery/ProgressPhotoGallery';
@@ -38,6 +39,8 @@ type ViewMode = 'gallery' | 'comparison';
 export const ProgressPhotosScreen: React.FC<Props> = ({
   navigation,
 }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { progressPhotos, deleteProgressPhoto } = useBodyTrackingStore();
 
   const [viewMode, setViewMode] = useState<ViewMode>('gallery');
@@ -284,7 +287,7 @@ export const ProgressPhotosScreen: React.FC<Props> = ({
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

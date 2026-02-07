@@ -25,6 +25,8 @@ interface Props {
 }
 
 export const WorkoutCalendarScreen: React.FC<Props> = ({ navigation }) => {
+  const styles = useMemo(() => getStyles(), []);
+
   const { workouts, deleteWorkout } = useWorkout();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -245,7 +247,7 @@ export const WorkoutCalendarScreen: React.FC<Props> = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

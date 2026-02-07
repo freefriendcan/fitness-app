@@ -4,9 +4,10 @@
  */
 
 import React, { useEffect } from 'react';
-import { StatusBar, StatusBarStyle } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider as ThemeContextProvider } from '@/contexts/ThemeContext';
 import { useUserStore } from '@/store';
+import { useTheme } from '@/hooks/useTheme';
 import type { Theme } from '@/constants/themes';
 
 interface ThemeProviderProps {
@@ -15,10 +16,11 @@ interface ThemeProviderProps {
 
 const InnerThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const themePreference = useUserStore((state) => state.getTheme());
+  // const themePreference = 'system';
 
   return (
     <ThemeContextProvider initialTheme={themePreference}>
-      <ThemedApp>{children}</ThemedApp>
+      {children}
     </ThemeContextProvider>
   );
 };
@@ -28,14 +30,13 @@ const ThemedApp: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+      {/* <StatusBar style={isDark ? 'light' : 'dark'} /> */}
       {children}
     </>
   );
 };
 
-// Import useTheme here to avoid circular dependency
-import { useTheme } from '@/hooks/useTheme';
+
 
 /**
  * Main ThemeProvider component

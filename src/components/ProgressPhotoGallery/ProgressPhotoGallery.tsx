@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { ProgressPhoto } from '@/types';
-import { Colors, Spacing, Typography } from '@/constants';
+import { Colors, Spacing, Typography, Layout } from '@/constants';
 
 interface Props {
   photos: ProgressPhoto[];
@@ -29,6 +29,89 @@ export const ProgressPhotoGallery: React.FC<Props> = ({
   const numColumns = 3;
   const gap = Spacing.sm;
   const cardSize = (screenWidth - Spacing.lg * 2 - gap * (numColumns - 1)) / numColumns;
+
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          paddingVertical: Spacing.sm,
+        },
+        gallery: {
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          marginHorizontal: Spacing.lg,
+        },
+        photoCard: {
+          borderRadius: Layout.borderRadius.md,
+          overflow: 'hidden',
+          backgroundColor: Colors.neutral[200],
+          position: 'relative',
+        },
+        photoCardSelected: {
+          borderWidth: 3,
+          borderColor: Colors.primary[500],
+        },
+        photo: {
+          width: '100%',
+          height: '100%',
+        },
+        photoOverlay: {
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          paddingTop: Spacing.xs,
+          paddingBottom: Spacing.sm,
+          paddingHorizontal: Spacing.xs,
+        },
+        photoInfo: {
+          gap: 2,
+        },
+        photoTypeBadge: {
+          alignSelf: 'flex-start',
+          paddingHorizontal: Spacing.xs,
+          paddingVertical: 2,
+          borderRadius: 4,
+        },
+        photoTypeText: {
+          fontSize: Typography.fontSize.xs,
+          fontWeight: Typography.fontWeight.semibold,
+          color: Colors.white,
+        },
+        photoDate: {
+          fontSize: Typography.fontSize.xs,
+          color: Colors.white,
+          fontWeight: Typography.fontWeight.medium,
+        },
+        selectedIndicator: {
+          position: 'absolute',
+          top: Spacing.xs,
+          right: Spacing.xs,
+          backgroundColor: Colors.white,
+          borderRadius: 12,
+        },
+        emptyContainer: {
+          alignItems: 'center',
+          paddingVertical: Spacing.xl3,
+          paddingHorizontal: Spacing.xl,
+        },
+        emptyText: {
+          fontSize: Typography.fontSize.base,
+          fontWeight: Typography.fontWeight.semibold,
+          color: Colors.text.primary,
+          marginTop: Spacing.md,
+        },
+        emptySubtext: {
+          fontSize: Typography.fontSize.sm,
+          color: Colors.text.secondary,
+          textAlign: 'center',
+          marginTop: Spacing.xs,
+        },
+      }),
+    []
+  );
 
   const formatDate = (date: Date) => {
     const d = new Date(date);
@@ -135,81 +218,3 @@ export const ProgressPhotoGallery: React.FC<Props> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: Spacing.sm,
-  },
-  gallery: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: Spacing.lg,
-  },
-  photoCard: {
-    borderRadius: Layout.borderRadius.md,
-    overflow: 'hidden',
-    backgroundColor: Colors.neutral[200],
-    position: 'relative',
-  },
-  photoCardSelected: {
-    borderWidth: 3,
-    borderColor: Colors.primary[500],
-  },
-  photo: {
-    width: '100%',
-    height: '100%',
-  },
-  photoOverlay: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    paddingTop: Spacing.xs,
-    paddingBottom: Spacing.sm,
-    paddingHorizontal: Spacing.xs,
-  },
-  photoInfo: {
-    gap: 2,
-  },
-  photoTypeBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: Spacing.xs,
-    paddingVertical: 2,
-    borderRadius: 4,
-  },
-  photoTypeText: {
-    fontSize: Typography.fontSize.xs,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.white,
-  },
-  photoDate: {
-    fontSize: Typography.fontSize.xs,
-    color: Colors.white,
-    fontWeight: Typography.fontWeight.medium,
-  },
-  selectedIndicator: {
-    position: 'absolute',
-    top: Spacing.xs,
-    right: Spacing.xs,
-    backgroundColor: Colors.white,
-    borderRadius: 12,
-  },
-  emptyContainer: {
-    alignItems: 'center',
-    paddingVertical: Spacing.xl3,
-    paddingHorizontal: Spacing.xl,
-  },
-  emptyText: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.semibold,
-    color: Colors.text.primary,
-    marginTop: Spacing.md,
-  },
-  emptySubtext: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    textAlign: 'center',
-    marginTop: Spacing.xs,
-  },
-});

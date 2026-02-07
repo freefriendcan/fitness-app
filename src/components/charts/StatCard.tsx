@@ -3,7 +3,7 @@
  * Displays a statistic with optional trend indicator
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Colors, Spacing, Typography, Layout } from '@/constants';
 
@@ -30,6 +30,72 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => {
   const isPositiveTrend = trend?.isPositive ?? true;
 
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          backgroundColor: Colors.white,
+          borderRadius: Layout.borderRadius.md,
+          padding: Spacing.lg,
+          borderWidth: 1,
+          borderColor: Colors.border.light,
+          ...Layout.shadow.sm,
+        },
+        compact: {
+          padding: Spacing.md,
+        },
+        icon: {
+          fontSize: 32,
+          marginBottom: Spacing.sm,
+        },
+        content: {
+          flex: 1,
+        },
+        title: {
+          fontSize: Typography.fontSize.sm,
+          color: Colors.text.secondary,
+          fontWeight: Typography.fontWeight.medium,
+          marginBottom: Spacing.xs,
+        },
+        value: {
+          fontSize: Typography.fontSize.xl2,
+          color: Colors.text.primary,
+          fontWeight: Typography.fontWeight.bold,
+          marginBottom: Spacing.xs,
+        },
+        subtitle: {
+          fontSize: Typography.fontSize.xs,
+          color: Colors.text.tertiary,
+        },
+        trendContainer: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: Spacing.xs,
+        },
+        trendIcon: {
+          fontSize: Typography.fontSize.sm,
+          marginRight: Spacing.xs,
+        },
+        trendValue: {
+          fontSize: Typography.fontSize.sm,
+          fontWeight: Typography.fontWeight.semibold,
+          marginRight: Spacing.xs,
+        },
+        trendPositive: {
+          color: Colors.success[600],
+        },
+        trendNegative: {
+          color: Colors.danger[600],
+        },
+        trendLabel: {
+          fontSize: Typography.fontSize.xs,
+          color: Colors.text.secondary,
+        },
+      }),
+    []
+  );
+
   return (
     <View style={[styles.container, variant === 'compact' && styles.compact]}>
       {icon && <Text style={styles.icon}>{icon}</Text>}
@@ -55,64 +121,3 @@ export const StatCard: React.FC<StatCardProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white,
-    borderRadius: Layout.borderRadius.md,
-    padding: Spacing.lg,
-    borderWidth: 1,
-    borderColor: Colors.border.light,
-    ...Layout.shadow.sm,
-  },
-  compact: {
-    padding: Spacing.md,
-  },
-  icon: {
-    fontSize: 32,
-    marginBottom: Spacing.sm,
-  },
-  content: {
-    flex: 1,
-  },
-  title: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.secondary,
-    fontWeight: Typography.fontWeight.medium,
-    marginBottom: Spacing.xs,
-  },
-  value: {
-    fontSize: Typography.fontSize.xl2,
-    color: Colors.text.primary,
-    fontWeight: Typography.fontWeight.bold,
-    marginBottom: Spacing.xs,
-  },
-  subtitle: {
-    fontSize: Typography.fontSize.xs,
-    color: Colors.text.tertiary,
-  },
-  trendContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: Spacing.xs,
-  },
-  trendIcon: {
-    fontSize: Typography.fontSize.sm,
-    marginRight: Spacing.xs,
-  },
-  trendValue: {
-    fontSize: Typography.fontSize.sm,
-    fontWeight: Typography.fontWeight.semibold,
-    marginRight: Spacing.xs,
-  },
-  trendPositive: {
-    color: Colors.success[600],
-  },
-  trendNegative: {
-    color: Colors.danger[600],
-  },
-  trendLabel: {
-    fontSize: Typography.fontSize.xs,
-    color: Colors.text.secondary,
-  },
-});

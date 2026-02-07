@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   View,
   Text,
@@ -27,11 +27,13 @@ interface Props {
 }
 
 export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
+
   const { user, logout, getUnits } = useUserStore();
   const { getWorkoutStats } = useWorkout();
   const { getLatestMeasurement, getWeightTrend, getWeightChange, progressPhotos } =
     useBodyTrackingStore();
-  const { colors } = useTheme();
 
   const stats = getWorkoutStats();
   const unitSystem = getUnits();
@@ -185,8 +187,8 @@ export const ProfileScreen: React.FC<Props> = ({ navigation }) => {
                         weightTrend === 'up'
                           ? colors.danger[500]
                           : weightTrend === 'down'
-                          ? colors.success[500]
-                          : colors.neutral[500]
+                            ? colors.success[500]
+                            : colors.neutral[500]
                       }
                     />
                   </View>
@@ -313,7 +315,7 @@ const formatFitnessGoal = (goal: string): string => {
   return goals[goal] || goal;
 };
 
-const styles = StyleSheet.create({
+const getStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -442,7 +444,7 @@ const styles = StyleSheet.create({
     fontSize: Typography.fontSize.sm,
   },
   trendBadge: {
-    backgroundColor: Colors.background.secondary,
+    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: 4,
   },

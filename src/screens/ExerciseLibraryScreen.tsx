@@ -71,6 +71,8 @@ const MUSCLE_GROUP_OPTIONS: MuscleGroup[] = [
 ];
 
 export const ExerciseLibraryScreen: React.FC = () => {
+  const styles = useMemo(() => getStyles(), []);
+
   const navigation = useNavigation<NavigationProp>();
   const { exercises, getExercisesByMuscleGroup, getExercisesByEquipment, searchExercises } = useExercise();
 
@@ -310,7 +312,7 @@ export const ExerciseLibraryScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = () => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background.secondary,

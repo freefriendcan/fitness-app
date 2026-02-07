@@ -2,7 +2,6 @@
  * Barrel export for all components
  */
 
-export { ErrorBoundary } from './ErrorBoundary';
 export { Button } from './Button/Button';
 export { Card, CardHeader, CardBody, CardFooter } from './Card/Card';
 export { Input } from './Input/Input';
@@ -19,3 +18,6 @@ export { MeasurementCard } from './MeasurementCard/MeasurementCard';
 export { MeasurementChart } from './MeasurementChart/MeasurementChart';
 export { ProgressPhotoGallery } from './ProgressPhotoGallery/ProgressPhotoGallery';
 export { ProgressPhotoComparison } from './ProgressPhotoComparison/ProgressPhotoComparison';
+
+// ErrorBoundary must be exported last to avoid circular dependency issues
+export { ErrorBoundary } from './ErrorBoundary/ErrorBoundary';

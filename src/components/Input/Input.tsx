@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   TextInput,
   StyleSheet,
@@ -24,6 +24,42 @@ export const Input: React.FC<InputProps> = ({
 }) => {
   const { colors } = useTheme();
   const hasError = !!error;
+
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          marginBottom: Spacing.md,
+        },
+        label: {
+          fontWeight: '600' as const,
+          fontSize: Typography.fontSize.sm,
+          marginBottom: Spacing.xs,
+        },
+        input: {
+          height: Layout.inputHeight,
+          borderWidth: 1,
+          borderRadius: Layout.borderRadius.md,
+          paddingHorizontal: Spacing.md,
+          fontSize: Typography.fontSize.base,
+        },
+        inputDisabled: {
+          opacity: 0.5,
+        },
+        errorText: {
+          fontWeight: '400' as const,
+          fontSize: Typography.fontSize.xs,
+          marginTop: Spacing.xs,
+        },
+        helperText: {
+          fontWeight: '400' as const,
+          fontSize: Typography.fontSize.xs,
+          marginTop: Spacing.xs,
+        },
+      }),
+    []
+  );
 
   return (
     <View style={styles.container}>
@@ -56,34 +92,3 @@ export const Input: React.FC<InputProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: Spacing.md,
-  },
-  label: {
-    fontWeight: '600' as const,
-    fontSize: Typography.fontSize.sm,
-    marginBottom: Spacing.xs,
-  },
-  input: {
-    height: Layout.inputHeight,
-    borderWidth: 1,
-    borderRadius: Layout.borderRadius.md,
-    paddingHorizontal: Spacing.md,
-    fontSize: Typography.fontSize.base,
-  },
-  inputDisabled: {
-    opacity: 0.5,
-  },
-  errorText: {
-    fontWeight: '400' as const,
-    fontSize: Typography.fontSize.xs,
-    marginTop: Spacing.xs,
-  },
-  helperText: {
-    fontWeight: '400' as const,
-    fontSize: Typography.fontSize.xs,
-    marginTop: Spacing.xs,
-  },
-});

@@ -11,6 +11,15 @@ import { ErrorBoundary } from '@/components';
  * Sets up the app with necessary providers
  */
 export default function App(): React.JSX.Element {
+  // return (
+  //   <React.Fragment>
+  //      <React.Fragment>
+  //         <RootNavigator />
+  //      </React.Fragment>
+  //   </React.Fragment>
+  // );
+
+  // Re-enable providers one by one
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>

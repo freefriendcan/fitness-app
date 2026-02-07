@@ -1,7 +1,5 @@
 import React, { Component, ReactNode } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Colors, Spacing, Typography, Layout } from '@/constants';
-import { Button } from '@/components';
 
 interface State {
   hasError: boolean;
@@ -16,6 +14,9 @@ interface Props {
  * Error Boundary Component
  * Catches JavaScript errors anywhere in the child component tree,
  * logs those errors, and displays a fallback UI.
+ * 
+ * Note: This component uses hardcoded styles to avoid circular dependencies
+ * with the main components barrel export.
  */
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
@@ -49,15 +50,16 @@ export class ErrorBoundary extends Component<Props, State> {
               {this.state.error?.message || 'An unexpected error occurred'}
             </Text>
             <Text style={styles.subtitle}>
-                Don't worry, your data is safe. Try restarting the app.
+              Don't worry, your data is safe. Try restarting the app.
             </Text>
             <View style={styles.actions}>
-              <Button
+              <TouchableOpacity
                 onPress={this.handleReset}
-                variant="primary"
+                style={styles.button}
+                activeOpacity={0.7}
               >
-                Try Again
-              </Button>
+                <Text style={styles.buttonText}>Try Again</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -68,13 +70,14 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 }
 
+// Hardcoded styles to avoid circular dependency with @/constants
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background.primary,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: Spacing.lg,
+    padding: 24,
   },
   content: {
     alignItems: 'center',
@@ -82,29 +85,43 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 64,
-    marginBottom: Spacing.md,
+    marginBottom: 16,
   },
   title: {
-    fontSize: Typography.fontSize.xl,
-    fontWeight: Typography.fontWeight.bold,
-    color: Colors.text.primary,
-    marginBottom: Spacing.sm,
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 8,
     textAlign: 'center',
   },
   message: {
-    fontSize: Typography.fontSize.base,
-    color: Colors.text.secondary,
-    marginBottom: Spacing.xs,
+    fontSize: 16,
+    color: '#6B7280',
+    marginBottom: 4,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.tertiary,
-    marginBottom: Spacing.xl,
+    fontSize: 14,
+    color: '#9CA3AF',
+    marginBottom: 32,
     textAlign: 'center',
   },
   actions: {
     width: '100%',
-    gap: Spacing.sm,
+    gap: 8,
+  },
+  button: {
+    backgroundColor: '#10B981',
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
+

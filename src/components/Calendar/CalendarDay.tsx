@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
 import { Colors, Spacing, Typography, Layout } from '@/constants';
 import { isSameDay } from '@/utils';
@@ -19,6 +19,45 @@ export const CalendarDay: React.FC<CalendarDayProps> = ({
   const completedWorkouts = workouts.filter((w) => w.completed).length;
   const incompleteWorkouts = workouts.filter((w) => !w.completed).length;
   const hasWorkouts = workouts.length > 0;
+
+  // Lazy style creation to avoid circular dependency with Layout
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        day: {
+          aspectRatio: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: Layout.borderRadius.md,
+          marginHorizontal: 1,
+          marginVertical: 1,
+        },
+        dayText: {
+          fontSize: Typography.fontSize.sm,
+          color: Colors.text.primary,
+          marginBottom: Spacing.xs,
+        },
+        indicators: {
+          flexDirection: 'row',
+          gap: 2,
+        },
+        indicator: {
+          width: 4,
+          height: 4,
+          borderRadius: 2,
+        },
+        indicatorOnly: {
+          width: 6,
+        },
+        indicatorCompleted: {
+          backgroundColor: Colors.success[500],
+        },
+        indicatorIncomplete: {
+          backgroundColor: Colors.warning[500],
+        },
+      }),
+    []
+  );
 
   const handlePress = () => {
     onPress(day.date);
@@ -93,37 +132,3 @@ export const CalendarDay: React.FC<CalendarDayProps> = ({
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  day: {
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: Layout.borderRadius.md,
-    marginHorizontal: 1,
-    marginVertical: 1,
-  },
-  dayText: {
-    fontSize: Typography.fontSize.sm,
-    color: Colors.text.primary,
-    marginBottom: Spacing.xs,
-  },
-  indicators: {
-    flexDirection: 'row',
-    gap: 2,
-  },
-  indicator: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-  },
-  indicatorOnly: {
-    width: 6,
-  },
-  indicatorCompleted: {
-    backgroundColor: Colors.success[500],
-  },
-  indicatorIncomplete: {
-    backgroundColor: Colors.warning[500],
-  },
-});
